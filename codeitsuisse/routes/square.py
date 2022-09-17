@@ -8,7 +8,10 @@ from codeitsuisse import app
 logger = logging.getLogger(__name__)
 
 @app.route('/tickerStreamPart1', methods=['POST'])
-def to_cumulative(stream: list):
+def to_cumulative():
+    data = request.get_json()
+    logging.info("data sent for evaluation {}".format(data))
+    stream = data.get("stream")   
     output = str(stream[0][:5])
     dataList = list()
     for record in stream:
@@ -24,10 +27,14 @@ def to_cumulative(stream: list):
         output = output + record
     outputList = list()
     outputList.append(output)
-    return(outputList)
+    logging.info("My result :{}".format(outputList))
+    return json.dumps(outputList)
 
 @app.route('/tickerStreamPart2', methods=['POST'])
 def to_cumulative_delayed(stream: list, quantity_block: int):
+    data = request.get_json()
+    logging.info("data sent for evaluation {}".format(data))
+    stream, quantityBlock = data.get("stream"), data.get("quantityBlock")
     outputList = list()
     streamSorted = sorted(stream, key = lambda x: (x[6], x))
     ticker = streamSorted[0][6]
@@ -57,7 +64,8 @@ def to_cumulative_delayed(stream: list, quantity_block: int):
     outputList.sort()
     for i in range(len(outputList)):
         outputList[i] = ''.join(outputList[i])
-    return outputList
+    logging.info("My result :{}".format(outputList))
+    return json.dumps(outputList)
 
 
 
