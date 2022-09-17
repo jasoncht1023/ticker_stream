@@ -8,8 +8,7 @@ from codeitsuisse import app
 logger = logging.getLogger(__name__)
 
 @app.route('/tickerStreamPart1', methods=['POST'])
-def evaluate():
-    def to_cumulative(stream: list):
+def to_cumulative(stream: list):
     output = str(stream[0][:5])
     dataList = list()
     for record in stream:
