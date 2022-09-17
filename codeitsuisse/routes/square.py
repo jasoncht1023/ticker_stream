@@ -7,7 +7,7 @@ from codeitsuisse import app
 
 logger = logging.getLogger(__name__)
 
-@app.route('/square', methods=['POST'])
+@app.route('/tickerStreamPart1', methods=['POST'])
 def evaluate():
     def to_cumulative(stream: list):
     output = str(stream[0][:5])
@@ -27,6 +27,7 @@ def evaluate():
     outputList.append(output)
     return(outputList)
 
+@app.route('/tickerStreamPart2', methods=['POST'])
 def to_cumulative_delayed(stream: list, quantity_block: int):
     outputList = list()
     streamSorted = sorted(stream, key = lambda x: (x[6], x))
